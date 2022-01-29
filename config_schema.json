@@ -4,8 +4,8 @@
     "fields": [
         {
             "name": "guardhelper.respect_attack_flags",
-            "default_value": "false",
-            "field_type": "string",
+            "default_value": false,
+            "field_type": "boolean",
             "macros_on_modify": []
         }
     ]

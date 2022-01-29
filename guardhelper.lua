@@ -67,7 +67,7 @@ function guardhelper:render_shields()
       self.guardId = anyone_to_guard
       if anyone_to_guard == ateam.my_id then
         nick_to_guard = ateam.options.own_name
-        scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("⛔ ", ""))  
+        scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("⛔ ", ""))
       else
         nick_to_guard = ateam.objs[anyone_to_guard]["desc"]
         scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("🛡 ", ""))
@@ -76,7 +76,7 @@ function guardhelper:render_shields()
 end
 
 function guardhelper:utils_enemy_count_table(count)
-  local cnt_tbl = 
+  local cnt_tbl =
   {
     [0] = "[  ]",
     [1] = "<white>[ <yellow>1<white>]",
@@ -88,7 +88,7 @@ function guardhelper:utils_enemy_count_table(count)
     [7] = "<white>[ <red>7<white>]",
     [8] = "<white>[ <red>8<white>]",
     [9] = "<white>[ <red>9<white>]",
-    [10] = "<white>[ <red>10<white>]",                    
+    [10] = "<white>[ <red>10<white>]",
   }
 
   return cnt_tbl[count]
@@ -99,11 +99,11 @@ function guardhelper:render_enemy_counts()
       local team_enemies_string = ""
       if ateam.objs[k] then
         team_enemies_string = self:utils_enemy_count_table(table.size(ateam.team_enemies[k]))
-        
+
         if k == ateam.my_id then
             scripts.ui.window_modify(scripts.ui.states_window_name, ateam.options.own_name, scripts.ui.window_modifiers.surround(team_enemies_string.." ", ""))
         else
-            scripts.ui.window_modify(scripts.ui.states_window_name, ateam.objs[k]["desc"], scripts.ui.window_modifiers.surround(team_enemies_string.." ", ""))          
+            scripts.ui.window_modify(scripts.ui.states_window_name, ateam.objs[k]["desc"], scripts.ui.window_modifiers.surround(team_enemies_string.." ", ""))
         end
 
       end
@@ -119,7 +119,7 @@ end
 
 function guardhelper:za_func()
 
-    if ateam.objs[ateam.my_id]["team_leader"] and guardhelper.respect_attack_flags == "true" then
+    if ateam.objs[ateam.my_id]["team_leader"] and guardhelper.respect_attack_flags then
       if ateam.attack_mode > 2 then
         if ateam.my_id == self.guardId then
           send("rozkaz druzynie zaslonic cie");
@@ -138,7 +138,7 @@ function guardhelper:za_func()
   --  if scripts.ui.states_window_nav_states["guard_state"] == "ok" then
       ateam:za_func(ateam.team[self.guardId])
 --    end
-    
+
 end
 
 function guardhelper:clear_state()

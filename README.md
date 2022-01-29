@@ -1,5 +1,11 @@
 # guardhelper
 
+### Opis
+
+Skrypt zaznacza w oknie kondycji najbardziej poranionego, ktory jest atakowany przez najwieksza ilosc przeciwnikow.
+
+Funkcja zaslony, ktora nalezy wprowadzic pod jakis klawisz, probuje zaslonic ranna osobe. Puszczanie zaslon uzywa standardowej flagi.
+
 ### Instalacja
 
 `/zainstaluj_plugin https://codeload.github.com/eldakar/guardhelper/zip/main`
@@ -11,12 +17,6 @@
 ### Uzycie
 
 Alias do klawisza: `guardhelper:za_func()`
-
-### Opis
-
-Skrypt wyswietla najbardziej poranionego, ktory jest atakowany przez najwieksza ilosc przeciwnikow.
-
-Funkcja zaslony, ktora nalezy wprowadzic pod jakis klawisz, probuje zaslonic ranna osobe. Puszczanie zaslon uzywa standardowej flagi.
 
 ### TODO
 * Legionista

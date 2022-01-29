@@ -1,0 +1,12 @@
+{
+    "macro_to_reload_elements": {
+    },
+    "fields": [
+        {
+            "name": "guardhelper.respect_attack_flags",
+            "default_value": "false",
+            "field_type": "string",
+            "macros_on_modify": []
+        }
+    ]
+}

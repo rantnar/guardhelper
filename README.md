@@ -19,7 +19,7 @@ Skrypt wyswietla najbardziej poranionego, ktory jest atakowany przez najwieksza 
 Funkcja zaslony, ktora nalezy wprowadzic pod jakis klawisz, probuje zaslonic ranna osobe. Puszczanie zaslon uzywa standardowej flagi.
 
 ### TODO
-Legionista
-Wyswietlanie prowadzacego
-Oddzielne klawisze na rannego i atakowanego (moze)
-Mozliwosc wskazywania zaslon bez zaslaniania samemu
+* Legionista
+* Wyswietlanie prowadzacego
+* Oddzielne klawisze na rannego i atakowanego (moze)
+* Mozliwosc wskazywania zaslon bez zaslaniania samemu

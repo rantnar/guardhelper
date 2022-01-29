@@ -26,6 +26,9 @@ Tarcza na sobie:
 
 Alias do klawisza: `guardhelper:za_func()`
 
+![Screenshot from 2022-01-29 22-08-12](https://user-images.githubusercontent.com/11772152/151679101-21a12332-bc74-4954-9cbd-8b8c9a1c8b3f.png)
+
+
 ### TODO
 * Legionista
 * Wyswietlanie prowadzacego

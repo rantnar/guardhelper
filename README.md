@@ -23,12 +23,21 @@ Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny
 
 ### Konfiguracja
 
-`/cset guardhelper.respect_attack_flags=true` - jezeli prowadzimy druzyne, flagi AWR beda respektowane przy wskazywaniu i rozkazywaniu obrony.
+> Uwaga! Klawisze nie beda dzialaly, jesli dana funkcja jest wylaczona w konfiguracji.
+
+`/cset guardhelper.show_suggested_target=true/false` - wyswietlaj tarcze sugerowanej brony
+
+`/cset guardhelper.show_most_wounded=true/false` - wyswietlaj najbardziej poranionego
+
+`/cset guardhelper.show_most_attacked=true/false` - wyswietlaj najbardziej atakowanego
+
+`/cset guardhelper.respect_attack_flags=true/false` - jezeli prowadzimy druzyne, flagi AWR beda respektowane przy wskazywaniu i rozkazywaniu obrony.
 
 ### Uzycie
 
 Alias do klawisza: `guardhelper:za_func()`
 
+Przyklad ustawienia w mudlecie
 ![Screenshot from 2022-01-29 22-08-12](https://user-images.githubusercontent.com/11772152/151679101-21a12332-bc74-4954-9cbd-8b8c9a1c8b3f.png)
 
 

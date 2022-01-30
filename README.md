@@ -2,7 +2,10 @@
 
 ### Opis
 
-Skrypt zaznacza w oknie kondycji najbardziej poranionego, ktory jest atakowany przez najwieksza ilosc przeciwnikow.
+Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny:
+* najbardziej poraniony
+* najbardziej atakowany
+* najbardziej optymalny do zasloniecia, bazujac na dwoch powyzszych wartosciach
 
 Funkcja zaslony, ktora nalezy wprowadzic pod jakis klawisz, probuje zaslonic ranna osobe. Puszczanie zaslon uzywa standardowej flagi.
 
@@ -32,5 +35,5 @@ Alias do klawisza: `guardhelper:za_func()`
 ### TODO
 * Legionista
 * Wyswietlanie prowadzacego
-* Oddzielne klawisze na rannego i atakowanego (moze)
+
 * Mozliwosc wskazywania zaslon bez zaslaniania samemu

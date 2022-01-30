@@ -234,7 +234,7 @@ function guardhelper:render_attacked()
       else
         nick_to_guard = ateam.objs[anyone_to_guard]["desc"]
       end
-      scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("⚔ ", ""))
+      scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("⚔  ", ""))
   end
 end
 

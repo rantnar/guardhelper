@@ -123,7 +123,7 @@ function guardhelper:find_attacked()
     if type(v) == "number" and table.size(ateam.team_enemies[v]) > 0 then
 
       -- for the equaly attacked members, pick the most wounded one
-      if table.size(ateam.team_enemies[v] == teamWeakestMemberTeamEnemies then
+      if table.size(ateam.team_enemies[v]) == teamWeakestMemberTeamEnemies then
         if ateam.objs[v]["hp"] < teamWeakestMemberHp then
           teamWeakestMemberId = v
           teamWeakestMemberHp = ateam.objs[v]["hp"]
@@ -131,7 +131,7 @@ function guardhelper:find_attacked()
         end
 
       -- otherwise, find the most attacked
-      elseif table.size(ateam.team_enemies[v] < teamWeakestMemberTeamEnemies then
+      elseif table.size(ateam.team_enemies[v]) < teamWeakestMemberTeamEnemies then
         teamWeakestMemberId = v
         teamWeakestMemberHp = ateam.objs[v]["hp"]
         teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])

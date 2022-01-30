@@ -59,6 +59,139 @@ function guardhelper:find_weakest()
   return suggestedGuardTarget
 end
 
+-- find the most wounded
+-- return id or 0
+function guardhelper:find_wounded()
+  local teamWeakestMemberId=0
+  local teamWeakestMemberHp=10
+  local teamWeakestMemberTeamEnemies=0
+  local suggestedGuardTarget=0
+  local savedDefenceTarget=0
+
+  -- do nothing if the team is not in combat
+  if table.size(ateam.team_enemies) == 0 then
+    --print("Nikt nie walczy.")
+    return 0
+  end
+
+  for v, k in pairs(ateam.team) do
+    -- for all endangered team members...
+    if type(v) == "number" and table.size(ateam.team_enemies[v]) > 0 then
+
+      -- for the equaly wounded members, pick the most attacked one
+      if ateam.objs[v]["hp"] == teamWeakestMemberHp then
+        if table.size(ateam.team_enemies[v]) > teamWeakestMemberTeamEnemies then
+          teamWeakestMemberId = v
+          teamWeakestMemberHp = ateam.objs[v]["hp"]
+          teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+        end
+
+      -- otherwise, find more wounded member
+      elseif ateam.objs[v]["hp"] < teamWeakestMemberHp then
+        teamWeakestMemberId = v
+        teamWeakestMemberHp = ateam.objs[v]["hp"]
+        teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+      end
+    end 
+  end
+
+  -- if found
+  if teamWeakestMemberHp < 10 then
+    suggestedGuardTarget = teamWeakestMemberId
+  end
+
+  return suggestedGuardTarget
+end
+
+-- find the most attacked
+-- return id or 0
+function guardhelper:find_attacked()
+  local teamWeakestMemberId=0
+  local teamWeakestMemberHp=10
+  local teamWeakestMemberTeamEnemies=10
+  local suggestedGuardTarget=0
+  local savedDefenceTarget=0
+
+  -- do nothing if the team is not in combat
+  if table.size(ateam.team_enemies) == 0 then
+    --print("Nikt nie walczy.")
+    return 0
+  end
+
+  for v, k in pairs(ateam.team) do
+    -- for all endangered team members...
+    if type(v) == "number" and table.size(ateam.team_enemies[v]) > 0 then
+
+      -- for the equaly attacked members, pick the most wounded one
+      if table.size(ateam.team_enemies[v] == teamWeakestMemberTeamEnemies then
+        if ateam.objs[v]["hp"] < teamWeakestMemberHp then
+          teamWeakestMemberId = v
+          teamWeakestMemberHp = ateam.objs[v]["hp"]
+          teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+        end
+
+      -- otherwise, find the most attacked
+      elseif table.size(ateam.team_enemies[v] < teamWeakestMemberTeamEnemies then
+        teamWeakestMemberId = v
+        teamWeakestMemberHp = ateam.objs[v]["hp"]
+        teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+      end
+    end 
+  end
+
+  -- if found
+  if teamWeakestMemberHp < 10 then
+    suggestedGuardTarget = teamWeakestMemberId
+  end
+
+  return suggestedGuardTarget
+end
+
+-- find the strongest party member, who is being attacked
+-- return id or 0
+function guardhelper:find_strongest()
+  local teamWeakestMemberId=0
+  local teamWeakestMemberHp=0
+  local teamWeakestMemberTeamEnemies=10
+  local suggestedGuardTarget=0
+
+  -- do nothing if the team is not in combat
+  if table.size(ateam.team_enemies) == 0 then
+    --print("Nikt nie walczy.")
+    return 0
+  end
+
+  for v, k in pairs(ateam.team) do
+    -- for all team members...
+    if ateam.objs[v] then
+
+      -- for the equaly wounded members, pick the least attacked
+      if ateam.objs[v]["hp"] == teamWeakestMemberHp then
+        if table.size(ateam.team_enemies[v]) < teamWeakestMemberTeamEnemies then
+          teamWeakestMemberId = v
+          teamWeakestMemberHp = ateam.objs[v]["hp"]
+          teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+        end
+
+      -- otherwise, find less wounded member
+      elseif ateam.objs[v]["hp"] > teamWeakestMemberHp then
+        teamWeakestMemberId = v
+        teamWeakestMemberHp = ateam.objs[v]["hp"]
+        teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])
+      end
+    end
+
+  end
+
+  -- if found
+  if teamWeakestMemberHp < 10 then
+    suggestedGuardTarget = teamWeakestMemberId
+  end
+
+  return suggestedGuardTarget
+end
+
+
 function guardhelper:render_shields()
   local anyone_to_guard = self:find_weakest()
   local nick_to_guard = 0
@@ -75,6 +208,38 @@ function guardhelper:render_shields()
   end
 end
 
+function guardhelper:render_wounded()
+  local anyone_to_guard = self:find_wounded()
+  local nick_to_guard = 0
+
+  if anyone_to_guard > 0 then
+      self.woundedId = anyone_to_guard
+      if anyone_to_guard == ateam.my_id then
+        nick_to_guard = ateam.options.own_name
+      else
+        nick_to_guard = ateam.objs[anyone_to_guard]["desc"]
+      end
+      scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("🩸 ", ""))
+  end
+end
+
+function guardhelper:render_attacked()
+  local anyone_to_guard = self:find_attacked()
+  local nick_to_guard = 0
+
+  if anyone_to_guard > 0 then
+      self.attackedId = anyone_to_guard
+      if anyone_to_guard == ateam.my_id then
+        nick_to_guard = ateam.options.own_name
+      else
+        nick_to_guard = ateam.objs[anyone_to_guard]["desc"]
+      end
+      scripts.ui.window_modify(scripts.ui.states_window_name, nick_to_guard, scripts.ui.window_modifiers.surround("⚔ ", ""))
+  end
+end
+
+
+-- EXPERIMENTAL
 function guardhelper:utils_enemy_count_table(count)
   local cnt_tbl =
   {
@@ -93,7 +258,7 @@ function guardhelper:utils_enemy_count_table(count)
 
   return cnt_tbl[count]
 end
-
+-- EXPERIMENTAL
 function guardhelper:render_enemy_counts()
     for k, v in pairs(ateam.team) do
       local team_enemies_string = ""
@@ -113,7 +278,6 @@ end
 
 
 function guardhelper:highlight_state()
-  --self:render_enemy_counts()
   self:render_shields()
 end
 

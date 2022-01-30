@@ -273,12 +273,50 @@ function guardhelper:render_enemy_counts()
 
       end
     end
-
 end
 
 
 function guardhelper:highlight_state()
-  self:render_shields()
+  if guardhelper.show_suggested_target then
+    self:render_shields()
+  end
+  if guardhelper.show_most_wounded then
+    self:render_wounded()
+  end
+  if guardhelper.show_most_attacked then
+    self:render_attacked()
+  end
+end
+
+function guardhelper:za_func_type(targetType)
+  local selectedTarget = 0
+  if targetType == "suggusted" then
+    selectedTarget = self.guardId    
+  elseif targetType == "wounded" then
+    selectedTarget = self.woundedId
+  elseif targetType == "targeted" then
+    selectedTarget = self.attackedId
+  end
+
+  if ateam.objs[ateam.my_id]["team_leader"] and guardhelper.respect_attack_flags then
+    if ateam.attack_mode > 2 then
+      if ateam.my_id == selectedTarget then
+        send("rozkaz druzynie zaslonic cie");
+      else
+        send("rozkaz zaslonic ob_"..selectedTarget);
+      end
+    end
+    if ateam.attack_mode > 1 then
+      if ateam.my_id == selectedTarget then
+        send("wskaz siebie jako cel obrony")
+      else
+        send("wskaz ob_"..selectedTarget.." jako cel obrony");
+      end
+    end
+  end
+
+  ateam:za_func(ateam.team[selectedTarget])
+
 end
 
 function guardhelper:za_func()

@@ -7,6 +7,24 @@
             "default_value": false,
             "field_type": "boolean",
             "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.show_suggested_target",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.show_most_wounded",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.show_most_attacked",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
         }
     ]
 }

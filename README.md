@@ -51,5 +51,4 @@ Przyklad ustawienia w mudlecie (wcisnij alt+e, a nastepnie **keys**)
 - [ ] Legionista
 - [ ] Wyswietlanie prowadzacego
 - [x] Rozdzielenie na celowanego i pocietego
-
-* Mozliwosc wskazywania zaslon bez zaslaniania samemu
+- [ ] Mozliwosc wskazywania zaslon bez zaslaniania samemu

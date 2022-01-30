@@ -108,7 +108,7 @@ end
 function guardhelper:find_attacked()
   local teamWeakestMemberId=0
   local teamWeakestMemberHp=10
-  local teamWeakestMemberTeamEnemies=10
+  local teamWeakestMemberTeamEnemies=0
   local suggestedGuardTarget=0
   local savedDefenceTarget=0
 

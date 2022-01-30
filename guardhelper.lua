@@ -131,7 +131,7 @@ function guardhelper:find_attacked()
         end
 
       -- otherwise, find the most attacked
-      elseif table.size(ateam.team_enemies[v]) < teamWeakestMemberTeamEnemies then
+      elseif table.size(ateam.team_enemies[v]) > teamWeakestMemberTeamEnemies then
         teamWeakestMemberId = v
         teamWeakestMemberHp = ateam.objs[v]["hp"]
         teamWeakestMemberTeamEnemies = table.size(ateam.team_enemies[v])

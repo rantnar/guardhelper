@@ -35,14 +35,21 @@ Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny
 
 ### Uzycie
 
-Alias do klawisza: `guardhelper:za_func()`
+`guardhelper:za_func()` - funkcja obrony sugerowanego
 
-Przyklad ustawienia w mudlecie
+`guardhelper:za_func_type("wounded")` - poranionego
+
+`guardhelper:za_func_type("targeted")` - celowanego
+
+
+Przyklad ustawienia w mudlecie (wcisnij alt+e, a nastepnie **keys**)
+
 ![Screenshot from 2022-01-29 22-08-12](https://user-images.githubusercontent.com/11772152/151679101-21a12332-bc74-4954-9cbd-8b8c9a1c8b3f.png)
 
 
 ### TODO
-* Legionista
-* Wyswietlanie prowadzacego
+- [ ] Legionista
+- [ ] Wyswietlanie prowadzacego
+- [x] Rozdzielenie na celowanego i pocietego
 
 * Mozliwosc wskazywania zaslon bez zaslaniania samemu

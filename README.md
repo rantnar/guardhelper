@@ -1,6 +1,6 @@
 # guardhelper
 
-### Opis
+## Opis
 
 Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny:
 * najbardziej poraniony
@@ -17,11 +17,11 @@ Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny
   - na sobie:
 ![Screenshot from 2022-01-29 21-28-45](https://user-images.githubusercontent.com/11772152/151678172-c3009bdc-6132-47c8-9b10-0d5af0c3206e.png)
 
-### Instalacja
+## Instalacja
 
 `/zainstaluj_plugin https://codeload.github.com/eldakar/guardhelper/zip/main`
 
-### Konfiguracja
+## Konfiguracja
 
 > Uwaga! Klawisze nie beda dzialaly, jesli dana funkcja jest wylaczona w konfiguracji.
 
@@ -33,7 +33,7 @@ Skrypt daje mozliwosc wyswietlania w oknie kondycji nastepujacych stanow druzyny
 
 `/cset guardhelper.respect_attack_flags=true/false` - jezeli prowadzimy druzyne, flagi AWR beda respektowane przy wskazywaniu i rozkazywaniu obrony.
 
-### Uzycie
+## Uzycie
 
 `guardhelper:za_func()` - funkcja obrony sugerowanego
 
@@ -47,7 +47,7 @@ Przyklad ustawienia w mudlecie (wcisnij alt+e, a nastepnie **keys**)
 ![Screenshot from 2022-01-29 22-08-12](https://user-images.githubusercontent.com/11772152/151679101-21a12332-bc74-4954-9cbd-8b8c9a1c8b3f.png)
 
 
-### TODO
+## TODO
 - [ ] Legionista
 - [ ] Wyswietlanie prowadzacego
 - [x] Rozdzielenie na celowanego i pocietego

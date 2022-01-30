@@ -290,7 +290,7 @@ end
 
 function guardhelper:za_func_type(targetType)
   local selectedTarget = 0
-  if targetType == "suggusted" then
+  if targetType == "suggested" then
     selectedTarget = self.guardId    
   elseif targetType == "wounded" then
     selectedTarget = self.woundedId

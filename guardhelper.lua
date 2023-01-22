@@ -276,7 +276,7 @@ function guardhelper:render_enemy_counts()
 end
 
 function guardhelper:highlight_state()
-  if table.size(ateam.team) > 1 then   
+  if ateam.objs[ateam.my_id]["team"]   
     if guardhelper.show_suggested_target then
       self:render_shields()
     end

@@ -275,16 +275,17 @@ function guardhelper:render_enemy_counts()
     end
 end
 
-
 function guardhelper:highlight_state()
-  if guardhelper.show_suggested_target then
-    self:render_shields()
-  end
-  if guardhelper.show_most_wounded then
-    self:render_wounded()
-  end
-  if guardhelper.show_most_attacked then
-    self:render_attacked()
+  if ateam.objs[ateam.my_id]["team"] then   
+    if guardhelper.show_suggested_target then
+      self:render_shields()
+    end
+    if guardhelper.show_most_wounded then
+      self:render_wounded()
+    end
+    if guardhelper.show_most_attacked then
+      self:render_attacked()
+    end
   end
 end
 

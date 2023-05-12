@@ -25,6 +25,18 @@
             "default_value": true,
             "field_type": "boolean",
             "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.show_guard_status",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.targeted_guards",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
         }
     ]
 }

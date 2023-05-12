@@ -3,6 +3,15 @@ guardhelper = guardhelper or {
   state = {}
 }
 
+-- TODO
+-- mozliwosc kolorowania wlaczonego okna walki gdy podniesione sa nastepujace eventy
+-- ateamAttackingDifferentTarget
+-- scripts.ui.combat_window.name - gayser okno walki
+-- TODO
+-- mozliwosc kolorowania wlaczonego okna wrogow gdy atakujemy zly cel
+-- stunStart
+-- stunEnd
+
 -- find the weakest party member, who is being attacked
 -- return id or 0
 function guardhelper:find_weakest()
@@ -275,8 +284,9 @@ function guardhelper:render_enemy_counts()
     end
 end
 
+
 function guardhelper:highlight_state()
-  if ateam.objs[ateam.my_id]["team"] then   
+  if ateam.objs[ateam.my_id]["team"] then
     if guardhelper.show_suggested_target then
       self:render_shields()
     end
@@ -292,7 +302,7 @@ end
 function guardhelper:za_func_type(targetType)
   local selectedTarget = 0
   if targetType == "suggested" then
-    selectedTarget = self.guardId    
+    selectedTarget = self.guardId
   elseif targetType == "wounded" then
     selectedTarget = self.woundedId
   elseif targetType == "targeted" then
@@ -322,26 +332,68 @@ end
 
 function guardhelper:za_func()
 
-    if ateam.objs[ateam.my_id]["team_leader"] and guardhelper.respect_attack_flags then
-      if ateam.attack_mode > 2 then
-        if ateam.my_id == self.guardId then
-          send("rozkaz druzynie zaslonic cie");
-        else
-          send("rozkaz zaslonic ob_"..self.guardId);
+    -- I am the defense target
+    if ateam.my_id == self.guardId then
+      if gmcp.char.info.guild_occ == "Legionista" then
+        anyone_to_hide_behind = self:find_strongest()
+        if anyone_to_hide_behind > 0 then
+          send("cofnij sie za ob_" .. anyone_to_hide_behind)
+          return
         end
       end
-      if ateam.attack_mode > 1 then
-        if ateam.my_id == self.guardId then
-          send("wskaz siebie jako cel obrony")
-        else
-          send("wskaz ob_"..self.guardId.." jako cel obrony");
-        end
-      end
+      return
     end
-  --  if scripts.ui.states_window_nav_states["guard_state"] == "ok" then
-      ateam:za_func(ateam.team[self.guardId])
---    end
 
+    -- attempt to guard only off CD
+    if scripts.ui.states_window_nav_states.guard_state then
+      return
+    end
+
+    -- find the preferred attacker
+    local who_to_guard_from = self:find_best_attacker(self.guardId)
+
+    -- default defense
+    -- TODO "Nozownik"
+    if who_to_guard_from < 1 or not guardhelper.targeted_guards or not gmcp.char.info.guild_occ == "Partyzant" then
+      ateam:za_func(ateam.team[self.guardId])
+      return
+    end
+
+    -- defend from...
+    send("zaslon przed ob_" .. who_to_guard_from)
+    -- hack
+    if ateam.release_guards then
+      send("przestan zaslaniac")
+    end
+end
+
+function guardhelper:find_best_attacker(defence_target)
+
+  for k, v in pairs(gmcp.objects.nums) do
+    --print("my id: " .. ateam.my_id .. "    def target:" .. guardhelper.guardId .. "   mytarget: " .. ateam.objs[ateam.my_id].attack_num .. "  probing:" .. v)
+    -- find enemy:
+    if v ~= ateam.my_id                               -- not my id
+      and ateam.enemy_op_ids[v]                       -- exists in the enemy table
+      and v ~= ateam.objs[ateam.my_id].attack_num     -- is not my attack target
+      and ateam.objs[v].attack_num == defence_target  -- is attacking my defense target
+      then
+        return v
+    end
+  end
+
+  -- if you are still here, just defend anyone
+  return 0
+end
+
+function guardhelper:show_guard_window(current_status)
+  if guardhelper.show_guard_status then
+    local roundedValue = 150 - round(current_status * 30)
+    if current_status >= 5 then 
+      setBackgroundColor("states_window", 0,0,0,0)
+    else
+      setBackgroundColor("states_window", roundedValue,0,0,255)
+    end
+  end
 end
 
 function guardhelper:clear_state()
@@ -349,7 +401,33 @@ function guardhelper:clear_state()
 end
 
 function guardhelper:init()
+  ghHelpAliasID = tempAlias("^/gh$", [[
+    cecho("<gray>+------------------------------------------------------------+<reset>\n")
+    cecho("<gray>|  <yellow>               .: Zaslony Wesolego Elfa :.                <gray>|<reset>\n")
+    cecho("<gray>|                                                            <gray>|<reset>\n")
+    cecho("<gray>|  - aliasy na sugerowany cel zaslony, rannego, atakowanego  <gray>|<reset>\n")
+    cecho("<gray>|  - obsluga partyzanta i fanatyka (zaslony przed nie-celem) <gray>|<reset>\n")
+    cecho("<gray>|  - cofanie sie legionisty                                  <gray>|<reset>\n")
+    cecho("<gray>|  - kolorowanie cooldownow jako tlo okna walki              <gray>|<reset>\n")
+    cecho("<gray>|  - respektowane flagi atakow i sciaganie zaslon mudleta    <gray>|<reset>\n")
+    cecho("<gray>|                                                            <gray>|<reset>\n")
+    cecho("<gray>|  <yellow>Wszystkie opcje true/false                                <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>                                                          <gray>|<reset>\n")
+    cecho("<gray>|  <red>guardhelper.show_suggested_target - POKAZUJ SUGESTIE      <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.respect_attack_flag   - uzywaj flag AWR       <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.show_most_wounded     - pokazuj rannego       <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.show_most_attacked    - pokazuj celowanego    <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.show_guard_status     - kolorowy COOLDOWN     <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.targeted_guards       - wlacz zawody SC i MC  <gray>|<reset>\n")
+    cecho("<gray>|                                                            <gray>|<reset>\n")
+    cecho("<gray>|  <yellow>Aliasy                                                    <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>                                                          <gray>|<reset>\n")
+    cecho("<gray>|  <red>guardhelper:za_func()             - zaslon SUGEROWANEGO   <gray>|<reset>\n")
+    cecho("<gray>+------------------------------------------------------------+<reset>\n")
+  ]])
+
   self.statesHandler = scripts.event_register:register_singleton_event_handler(self.statesHandler, "printStatusDone", function() self:highlight_state() end)
+  self.statesHandler2 = scripts.event_register:register_singleton_event_handler(self.statesHandler2, "guard_state", function(_, state)  self:show_guard_window(state) end)
 end
 
 guardhelper:init()

@@ -353,8 +353,7 @@ function guardhelper:za_func()
     local who_to_guard_from = self:find_best_attacker(self.guardId)
 
     -- default defense
-    -- TODO "Nozownik"
-    if who_to_guard_from < 1 or not guardhelper.targeted_guards or not gmcp.char.info.guild_occ == "Partyzant" then
+    if who_to_guard_from < 1 or not guardhelper.targeted_guards or not (gmcp.char.info.guild_occ == "Partyzant" or gmcp.char.info.guild_occ == "Nozownik") then
       ateam:za_func(ateam.team[self.guardId])
       return
     end

@@ -1,5 +1,6 @@
 guardhelper = guardhelper or {
   triggers = {},
+  fadingcolor = "red",
   state = {}
 }
 
@@ -390,8 +391,34 @@ function guardhelper:show_guard_window(current_status)
     if current_status >= 5 then 
       setBackgroundColor("states_window", 0,0,0,0)
     else
-      setBackgroundColor("states_window", roundedValue,0,0,255)
+      if guardhelper.fadingcolor == "green" then
+        setBackgroundColor("states_window", 0,roundedValue,0,255)
+      else
+        setBackgroundColor("states_window", roundedValue,0,0,255)
+      end
     end
+  end
+end
+
+function guardhelper:fade_guard_window(c_red,c_green,c_blue,c_hue)
+  if guardhelper.show_guard_status then
+    local roundedValue = 150 - round(current_status * 30)
+    if current_status >= 5 then
+      setBackgroundColor("states_window", 0,0,0,0)
+    else
+      if guardhelper.fadingcolor == "green" then
+        setBackgroundColor("states_window", 0,roundedValue,0,255)
+      else
+        setBackgroundColor("states_window", roundedValue,0,0,255)
+      end
+    end
+  end
+end
+
+function guardhelper:blink_state_window(c_red,c_green,c_blue,c_hue, duration)
+  if guardhelper.show_guard_status then
+    setBackgroundColor("states_window", c_red,c_green,c_blue,c_hue)
+    tempTimer(duration,[[setBackgroundColor("states_window", 0,0,0,0)]])
   end
 end
 
@@ -430,3 +457,24 @@ function guardhelper:init()
 end
 
 guardhelper:init()
+
+-- REPLACEMENT FUNCTIONS
+function trigger_func_skrypty_ui_footer_elements_cover_action_success()
+  guardhelper.fadingcolor="green"
+  ateam.cover_command_click = nil
+  scripts.ui.guard_state_epoch = getEpoch()
+  resumeNamedTimer("arkadia", "cover_timer")
+end
+
+function trigger_func_skrypty_ui_footer_elements_cover_action_fail()
+  guardhelper.fadingcolor="red"
+  scripts.ui.guard_state_epoch = getEpoch()
+  resumeNamedTimer("arkadia", "cover_timer")
+end
+
+function trigger_func_skrypty_ui_footer_elements_order_action()
+  guardhelper.fadingcolor="green"
+  scripts.ui.order_state_epoch = getEpoch()
+  resumeNamedTimer("arkadia", "order_timer")
+end
+

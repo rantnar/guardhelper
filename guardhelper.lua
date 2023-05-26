@@ -345,11 +345,13 @@ function guardhelper:za_func()
       return
     end
 
-    -- attempt to guard only off CD
-    if scripts.ui.states_window_nav_states.guard_state then
-      return
+    if guardhelper.cooldown_lock then
+      -- attempt to guard only off CD
+      if scripts.ui.states_window_nav_states.guard_state then
+        return
+      end
     end
-
+    
     -- find the preferred attacker
     local who_to_guard_from = self:find_best_attacker(self.guardId)
 
@@ -441,6 +443,7 @@ function guardhelper:init()
     cecho("<gray>|  <light_slate_blue>                                                          <gray>|<reset>\n")
     cecho("<gray>|  <red>guardhelper.show_suggested_target - POKAZUJ SUGESTIE      <gray>|<reset>\n")
     cecho("<gray>|  <light_slate_blue>guardhelper.respect_attack_flag   - uzywaj flag AWR       <gray>|<reset>\n")
+    cecho("<gray>|  <light_slate_blue>guardhelper.cooldown_lock         - czy zaslaniac w CD    <gray>|<reset>\n")    
     cecho("<gray>|  <light_slate_blue>guardhelper.show_most_wounded     - pokazuj rannego       <gray>|<reset>\n")
     cecho("<gray>|  <light_slate_blue>guardhelper.show_most_attacked    - pokazuj celowanego    <gray>|<reset>\n")
     cecho("<gray>|  <light_slate_blue>guardhelper.show_guard_status     - kolorowy COOLDOWN     <gray>|<reset>\n")

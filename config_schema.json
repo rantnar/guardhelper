@@ -37,6 +37,12 @@
             "default_value": true,
             "field_type": "boolean",
             "macros_on_modify": []
+        },
+        {
+            "name": "guardhelper.cooldown_lock",
+            "default_value": true,
+            "field_type": "boolean",
+            "macros_on_modify": []
         }
     ]
 }

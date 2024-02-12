@@ -364,7 +364,7 @@ function guardhelper:za_func()
     -- defend from...
     send("zaslon przed ob_" .. who_to_guard_from)
     -- hack
-    if ateam.release_guards and who_to_guard_from.is_enemy() == false then
+    if ateam.release_guards then
       send("przestan zaslaniac")
     end
 end
@@ -479,10 +479,5 @@ function trigger_func_skrypty_ui_footer_elements_order_action()
   guardhelper.fadingcolor="green"
   scripts.ui.order_state_epoch = getEpoch()
   resumeNamedTimer("arkadia", "order_timer")
-end
-
-function is_enemy()
-  local isEnemy = table.contains(scripts.people.enemy_guilds, guild)
-  return isEnemy
 end
 
